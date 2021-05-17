@@ -21,6 +21,9 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+body, html {
+  height: 100%;
+}
 :root{
     --black : #1b1b1b;
     --pink : #fff8e7;

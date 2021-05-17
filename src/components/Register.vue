@@ -1,9 +1,8 @@
 <template>
     <div class="register">
             <div class="register__container">
-                <div class="container__left">
+                <div class="register__container__left">
                     <div class="register__left__info">
-                       
                         <div class="register__logo">
                             <img src="../assets/Pepper_logo_horizontal.png" alt="logo" />
                         </div>
@@ -21,14 +20,22 @@
                            
                             
                             <div class="signup__container">
-                                <form @submit="checkForm" class="signup__form">
-                                    <label htmlFor="username" class="label__heading">Username</label>
-                                    <input type="text" name="username" v-model="username" placeholder="mail@somedomain.com" />  
-                                    <!-- <li v-for="(error, index) in errors" :key="index">{{error}} </li>                                 -->
-                                    <label htmlFor="email" class="label__heading">Email</label>
-                                    <input type="text" name="email" v-model="email" placeholder="mail@somedomain.com" />
-                                    <label htmlFor="password" class="label__heading">Password</label>
+                                <form @submit="checkForm" class="signup__form" >            
+                                    <label class="label__heading">Username</label>
+                                    <input type="text" name="username" v-model="username" placeholder="mail@somedomain.com"/>
+                                    <!-- <span class="test_danger" v-if="!$v.username.required && !$v.username.$dirty">Name is required</span>   
+                                    <span class="test_danger" v-if="!$v.username.alpha && !$v.username.$dirty">Name is required</span>      -->
+                                   
+
+                                    <label class="label__heading">Email</label>
+                                    <input type="email" name="email" v-model="email" placeholder="mail@somedomain.com" />
+                                    <!-- <span class="test_danger" v-if="(!$v.email.required || !$v.email.email ) && !$v.username.$dirty">Name is required</span>    -->
+
+                                    <label class="label__heading">Password</label>
                                     <input type="password" v-model="password" placeholder="Min. 8 character" name="password" id="" />
+                                    <!-- <span class="test_danger" v-if="!$v.password.required  && !$v.password.$dirty">Password is required</span>   
+                                    <span class="test_danger" v-if="(!$v.password.minLength || !$v.password.maxLength)  && !$v.password.$dirty">Password must be {{$v.password.$params.minLength.min}} characters!</span>    -->
+
                                     <input type="submit" class="submit" value="Sign up"/>  
                                 </form>
                                 <div class="signup__footer">
@@ -37,60 +44,28 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
-                <div class="container__right">
-                   
+                <div class="register__container__right">
                     <img src="../assets/bg_1_Tavola_disegno_1.jpg" alt="image" srcset="" />
-
-                   
                 </div>
             </div>
         </div>
 </template>
 
 <script>
+
 export default {
     name : "Register",
-    data(){
-        return{
-            errors : [],
-            username : null,
-            email : null,
-            password : null
-        }
-    },
-    methods : {
-        checkForm : function(e){
+    data:()=>({
 
-            this.errors=[];
-
-            if(!this.username){
-                this.errors.push("invalid username")
-            }
-
-            if(!this.password){
-                this.errors.push("invalid pass")
-            }
-
-            if(!this.email){
-                this.errors.push("invalid email id")
-            }
-            else if(!this.validEmail(this.email)){
-                this.errors.push("valid email is required")
-            }
-
-            if(!this.errors.length){
-                return true
-            }
-             e.preventDefault();
-
-        },
-        validEmail : function(email){
-             var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
-        }
-    }
+            username : "",
+            email : "",
+            password : ""
+        
+    }),
+    
 }
 </script>
 
@@ -98,32 +73,36 @@ export default {
   
 .register{
     max-width: 100%;
+    max-height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 .register__container{
     display: flex;
     width: 100%;
+    height: 100%;
 }
-.container__left{
+.register__container__left{
     display: flex;
     width: 50%;
     justify-content: center;
     /* margin-top: 16px;
     margin-bottom: 16px; */
     background-color: var(--pink);
-    height: 95vh;
+    height: 100vh;
 }
 
 .register__left__info{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 70%;
+    width: 100%;
+    height: 100%;
     margin-top: 30px;
-    margin-left: 120px;
-    margin-right: 120px;
+    margin-left: 130px;
+    margin-right: 160px;
 }
 .register__logo{
     width: 100%;
@@ -171,7 +150,7 @@ export default {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 34px;
+    height: 40px;
     border: 2px solid var(--silver);
     border-radius: 50px;
     cursor: pointer;
@@ -205,6 +184,7 @@ h6 {
  h6 >span { 
     background:var(--pink); 
     padding:0 10px; 
+    color: var(--silver);
 }
 
 .signup__container{
@@ -235,12 +215,27 @@ h6 {
 .signup__form > input{
     border-radius: 50px;
     width: 100%;
-    height: 8px;
+    height: 40px;
     padding:18px;
     outline: none;
     background-color:var(--pink) ;
-    border: 0.2px solid var(--silver);
-    
+    border: 0.2px solid var(--silver);   
+}
+
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+
+::placeholder{
+    font-weight: 50;
+    font-size: 11px;
+    color: var(--silver);
+  
 }
 .signup__form .submit{
     display: flex;
@@ -249,7 +244,7 @@ h6 {
     width: 100%;
     border-radius: 50px;
     margin-top: 20px;
-    height: 34px;
+    height: 40px;
     cursor: pointer;
     outline: none;
     border:none;
@@ -276,17 +271,106 @@ h6 {
     cursor: pointer;
 }
 
-.container__right{
+.register__container__right{
     display: flex;
     width: 50%;
+    height: 100vh;
     /* margin-top: 16px;
     margin-bottom: 16px; */
 }
 
 
-.container__right > img{
+.register__container__right > img{
     width: 100%;
-    height: 95vh;
+    height: 100%;
     transform: scaleX(-1);
 }
+
+@media (min-width :1000px)  { 
+      .register{
+            max-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+}
+@media (max-device-width: 800px) {
+    .register{
+            max-width: 100%;
+            display: flex;
+            background-color:var(--pink) ;
+
+        }
+        .register__container{
+            display: flex;
+            flex-direction: column-reverse;
+            width: 100%;
+            height: 100%;
+        }
+        .register__logo{
+            width: 100%;
+            height: 40%;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .register__logo > img{
+            width: 90px;
+            margin-left: -20px;
+            object-fit: contain;
+            top: -100px;
+        }
+        .register__container__left{
+            display: flex;
+            width: 100%;
+            height: 60%;
+            justify-content: center;
+            background-color: var(--pink);
+        }
+        .register__left__info{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+           margin: 25px;
+            
+         
+        }
+        .register__container__right{
+                width: 100%;
+                height: 30%;
+                position: relative;
+                transform: scaleX(-1);
+        }
+        .register__container__right > img{
+            width: 100%;
+            height: 500px;
+            border-top-left-radius:0;
+            border-top-right-radius:0;
+            border-bottom-left-radius:50% 20%;
+            border-bottom-right-radius: 10% 50% 20%;
+        }
+}
+@media (max-device-width: 400px) {
+      .register{
+            max-width: 100%;
+            background-color:var(--pink) ;
+        }
+           .register__container__left{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            background-color: var(--pink);
+        }
+          .register__left__info{
+            display: flex;
+            margin: 20px;
+            width: 100%;
+            height: 100%;
+         
+        }
+        
+}
+
 </style>
